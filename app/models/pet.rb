@@ -13,6 +13,6 @@ class Pet < ApplicationRecord
   end
 
   def self.search_pets(params)
-    where(name: IN params[:pet])
+    where(name: params[:pet])
   end
 end
