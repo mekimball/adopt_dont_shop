@@ -11,11 +11,23 @@
                       <% end %>
 <p>Application Status: <%= @application.status %></p>
 
-<%= form_with url: "/applications/#{@application.id}", method: :get, local: true do |f| %>
-  <p><%= f.label "Add a Pet to this Application:" %></p>
-  <p><%= f.text_field :pet %></p>
+<% if @application.status != 'Pending' %>
+  <%= form_with url: "/applications/#{@application.id}", method: :get, local: true do |f| %>
+    <p><%= f.label "Add a Pet to this Application:" %></p>
+    <p><%= f.text_field :pet %></p>
 
-  <%= f.submit "Submit"%>
+    <%= f.submit "Submit"%>
+  <% end %>
+<% end %>
+
+<% if !@application.pets.empty? && @application.status != 'Pending'%>
+
+  <%= form_with url: "/applications/#{@application.id}", method: :patch, local: true do |f| %>
+  <p><%= f.label :"Why would you make a good owner for these pets?" %></p>
+  <p><%= f.text_field :good_reason %></p>
+  <p><%= f.hidden_field :status, value: 'Pending' %></p>
+  <%= f.submit "Submit Application"%>
+  <% end %>
 <% end %>
 
 <% if !@found_pets.nil? %>
