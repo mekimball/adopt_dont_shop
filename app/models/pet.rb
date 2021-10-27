@@ -16,5 +16,6 @@ class Pet < ApplicationRecord
     if params[:pet] != nil
       @found_pets = Pet.search(params[:pet])
     end
+    # require 'pry'; binding.pry
   end
 end

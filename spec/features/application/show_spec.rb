@@ -36,6 +36,23 @@ RSpec.describe 'the application show' do
       expect(page).to have_content('Fluffy')
       expect(page).to have_content('Fluffy 2')
     end
+
+    it 'can search for a pet with a partial name and case insensitive' do
+      shelter = Shelter.create!(name: 'Aurora shelter', city: 'Aurora, CO', foster_program: false, rank: 9)
+      pet_1 = shelter.pets.create!(adoptable: true, age: 7, breed: 'sphynx', name: 'Fluffy')
+      pet_2 = shelter.pets.create!(adoptable: true, age: 7, breed: 'tiger', name: 'Fluffy 2')
+      application = Application.create!(name: 'Jim Jimmerson', street: '123 Fake St', city: 'Denver', state: 'CO', zip_code: '90210')
+
+      visit "/applications/#{application.id}"
+
+      expect(page).to have_content("Add a pet to this application:")
+
+      fill_in 'pet', with: 'fluff'
+      click_button 'Submit'
+
+      expect(page).to have_content('Fluffy')
+      expect(page).to have_content('Fluffy 2')
+    end
   end
 
   describe 'add pet' do
