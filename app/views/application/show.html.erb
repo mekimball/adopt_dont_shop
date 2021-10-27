@@ -18,8 +18,9 @@
   <%= f.submit "Submit"%>
 <% end %>
 
-<% if !@found_pets.empty? %>
+<% if !@found_pets.nil? %>
   <% @found_pets.each do |pet| %>
     <p><%= pet.name %>
+    <%= button_to "Adopt this Pet", "/applications/#{@application.id}/pets", method: :post, params:{pet_id: pet.id}  %>
   <% end %>
 <% end %>

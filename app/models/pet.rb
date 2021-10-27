@@ -13,6 +13,8 @@ class Pet < ApplicationRecord
   end
 
   def self.search_pets(params)
-    where(name: params[:pet])
+    if params[:pet] != nil
+      @found_pets = Pet.search(params[:pet])
+    end
   end
 end

@@ -1,6 +1,7 @@
 class ApplicationsController < ApplicationController
   def show
     @application = Application.find(params[:id])
+    # require 'pry'; binding.pry
     @found_pets = Pet.adoptable.search_pets(params)
   end
 
@@ -13,7 +14,7 @@ class ApplicationsController < ApplicationController
   end
 
   def create
-    @application = Application.find_by(id: app_params[:application_id])
+    # @application = Application.find_by(id: app_params[:application_id])
     application = Application.new(app_params)
 
     if application.save
