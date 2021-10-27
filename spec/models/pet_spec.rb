@@ -38,5 +38,15 @@ RSpec.describe Pet, type: :model do
         expect(@pet_3.shelter_name).to eq(@shelter_1.name)
       end
     end
+    describe 'search_pets' do
+      it 'returns searched for pets' do
+        shelter = Shelter.create!(name: 'Aurora shelter', city: 'Aurora, CO', foster_program: false, rank: 9)
+        pet_1 = shelter.pets.create!(adoptable: true, age: 7, breed: 'sphynx', name: 'Fluffy')
+        pet_2 = shelter.pets.create!(adoptable: true, age: 7, breed: 'tiger', name: 'Fluffy 2')
+        search = {pet: "fluffy"}
+
+        expect(Pet.search_pets(search)).to eq([pet_1, pet_2])
+      end
+    end
   end
 end
